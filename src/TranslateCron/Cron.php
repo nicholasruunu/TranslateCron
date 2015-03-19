@@ -75,7 +75,10 @@ class Cron
         $this->daysOfMonth = $places[2];
         $this->months = $places[3];
         $this->daysOfWeek = $places[4];
-        $this->years = $places[5];
+        $this->years = null;
+        if(isset($place[5])) {
+            $this->years = $places[5];
+        }
     }
 
     /**
