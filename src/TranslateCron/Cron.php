@@ -76,7 +76,7 @@ class Cron
         $this->months = $places[3];
         $this->daysOfWeek = $places[4];
         $this->years = '*';
-        if (isset($place[5])) {
+        if (isset($places[5])) {
             $this->years = $places[5];
         }
     }
@@ -114,10 +114,10 @@ class Cron
             return $this->returnFrame('day of the month');
         }
         if ($this->isRecurring($days[0])) {
-            return $this->returnFrame('days of month', explode('/', $days[0])[1]);
+            return $this->returnFrame('days of the month', explode('/', $days[0])[1]);
         }
         if ($this->isRange($days[0])) {
-            return $this->returnFrame('days of month', $days[0]);
+            return $this->returnFrame('days of the month', $days[0]);
         }
         return $days;
     }
@@ -135,7 +135,7 @@ class Cron
             return $this->returnFrame('day of the week');
         }
         if ($this->isRecurring($days[0])) {
-            return $this->returnFrame('days of the week', explode('/', $days[0])[1]);
+            return [];
         }
         if ($this->isRange($days[0])) {
             return $this->returnFrame('days of the week', $days[0]);
