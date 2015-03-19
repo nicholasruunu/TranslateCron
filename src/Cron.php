@@ -1,24 +1,38 @@
 <?php namespace Garbee\TranslateCron;
 
+use Garbee\TranslateCron\Exceptions\InvalidExpression;
+
 class Cron
 {
+    /**
+     * @var string
+     */
+    protected $minutes;
 
     /**
-     * @var string The cron expression.
+     * @var string
      */
-    protected $expression;
+    protected $hours;
 
-    /*
-    The mapping of the cron placement in the expression is as follows:
-     [
-        0 => 'minute',
-        1 => 'hour',
-        2 => 'dayOfMonth',
-        3 => 'month',
-        4 => 'dayOfWeek',
-        5 => 'year'
-     ]
-    */
+    /**
+     * @var string
+     */
+    protected $daysOfMonth;
+
+    /**
+     * @var string
+     */
+    protected $months;
+
+    /**
+     * @var string
+     */
+    protected $daysOfWeek;
+
+    /**
+     * @var string|null
+     */
+    protected $years;
 
     protected $dayMapping = [
         '*' => 'Every day',
@@ -52,7 +66,16 @@ class Cron
      */
     public function __construct($expression)
     {
-        $this->expression = $expression;
+        $places = explode(' ', trim($expression));
+        if(count($places) < 5 || count($places) > 6) {
+            throw new InvalidExpression;
+        }
+        $this->minutes = $places[0];
+        $this->hours = $places[1];
+        $this->daysOfMonth = $places[2];
+        $this->months = $places[3];
+        $this->daysOfWeek = $places[4];
+        $this->years = $places[5];
     }
 
     /**
@@ -62,7 +85,7 @@ class Cron
      */
     public function daysOfWeek()
     {
-        $days = explode(',', explode(' ', $this->expression)[4]);
+        $days = explode(',', $this->daysOfWeek);
         if ($this->isRecurring($days[0])) {
             return $this->returnFrame('days', explode('/', $days[0])[1]);
         }
@@ -81,7 +104,7 @@ class Cron
      */
     public function months()
     {
-        $months = explode(',', explode(' ', $this->expression)[3]);
+        $months = explode(',', $this->months);
         if ($this->isRecurring($months[0])) {
             return $this->returnFrame('months', explode('/', $months[0])[1]);
         }
@@ -100,7 +123,7 @@ class Cron
      */
     public function hours()
     {
-        $hours = explode(',', explode(' ', $this->expression)[1]);
+        $hours = explode(',', $this->hours);
         if ($hours[0] === '*') {
             return $this->returnFrame('hour');
         }
@@ -120,7 +143,7 @@ class Cron
      */
     public function minutes()
     {
-        $minutes = explode(',', explode(' ', $this->expression)[0]);
+        $minutes = explode(',', $this->minutes);
         if ($minutes[0] === '*') {
             return $this->returnFrame('minute');
         }
