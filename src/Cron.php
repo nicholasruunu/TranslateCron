@@ -1,6 +1,6 @@
 <?php namespace Garbee\TranslateCron;
 
-class TranslateCron
+class Cron
 {
 
     /**
@@ -45,17 +45,10 @@ class TranslateCron
         '12' => 'December'
     ];
 
-    public function __construct($expression = '* * * * * *')
-    {
-        $this->expression = $expression;
-    }
-
     /**
      * @param string $expression
-     *
-     * Set the expression property.
      */
-    public function expression($expression)
+    public function __construct($expression)
     {
         $this->expression = $expression;
     }
