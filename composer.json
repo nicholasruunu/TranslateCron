@@ -1,0 +1,12 @@
+{
+    "name": "garbee/translate-cron",
+    "description": "A system to help translation of cron expressions into natural language.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jonathan Garbee",
+            "email": "jonathan@garbee.me"
+        }
+    ],
+    "require": {}
+}
