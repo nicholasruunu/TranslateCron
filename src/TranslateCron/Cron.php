@@ -75,11 +75,51 @@ class Cron
         $this->daysOfMonth = $places[2];
         $this->months = $places[3];
         $this->daysOfWeek = $places[4];
-        $this->years = null;
+        $this->years = '*';
         if(isset($place[5])) {
             $this->years = $places[5];
         }
     }
+
+    /**
+     * Get the years the job executes on.
+     *
+     * @return array
+     */
+    public function years() {
+        $years = explode(',', $this->years);
+        if($years[0] === '*') {
+            return $this->returnFrame('year');
+        }
+        if($this->isRecurring($years[0])) {
+            return $this->returnFrame('years', explode('/', $years[0])[1]);
+        }
+        if($this->isRange($years[0])) {
+            return $this->returnFrame('years', $years[0]);
+        }
+        return $years;
+    }
+
+
+    /**
+     * Get the days of the month the job executes on.
+     *
+     * @return array
+     */
+    public function daysOfMonth() {
+        $days = explode(',', $this->daysOfMonth);
+        if($days[0] === '*') {
+            return $this->returnFrame('day of the month');
+        }
+        if($this->isRecurring($days[0])){
+            return $this->returnFrame('days of month', explode('/', $days[0])[1]);
+        }
+        if($this->isRange($days[0])) {
+            return $this->returnFrame('days of month', $days[0]);
+        }
+        return $days;
+    }
+
 
     /**
      * Get the days of the week the job executes on.
@@ -89,11 +129,14 @@ class Cron
     public function daysOfWeek()
     {
         $days = explode(',', $this->daysOfWeek);
+        if($days[0] === '*') {
+            return $this->returnFrame('day of the week');
+        }
         if ($this->isRecurring($days[0])) {
-            return $this->returnFrame('days', explode('/', $days[0])[1]);
+            return $this->returnFrame('days of the week', explode('/', $days[0])[1]);
         }
         if ($this->isRange($days[0])) {
-            return $this->returnFrame('days', $days[0]);
+            return $this->returnFrame('days of the week', $days[0]);
         }
         return array_map(function ($day) {
             return $this->dayMapping[$day];
