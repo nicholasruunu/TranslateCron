@@ -8,5 +8,8 @@
             "email": "jonathan@garbee.me"
         }
     ],
+    "autoload": {
+        "psr-4": {"Garbee\\": "src/"}
+    },
     "require": {}
 }
