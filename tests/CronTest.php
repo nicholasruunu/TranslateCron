@@ -20,4 +20,15 @@ class CronTest extends \PHPUnit_Framework_TestCase {
 
         return $cron;
     }
+
+    /**
+     * @covers \Garbee\TranslateCron\Cron::__construct
+     */
+    public function testObjectCanBeConstructedWithValidArgument2() {
+        $cron = new Cron('*, *, *, *, *, *');
+
+        $this->assertInstanceOf(Cron::class, $cron);
+
+        return $cron;
+    }
 }
