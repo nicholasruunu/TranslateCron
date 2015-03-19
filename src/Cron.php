@@ -8,15 +8,17 @@ class Cron
      */
     protected $expression;
 
-    // Just a reminder array for the positions in the expression.
-    private $cronMap = [
+    /*
+    The mapping of the cron placement in the expression is as follows:
+     [
         0 => 'minute',
         1 => 'hour',
         2 => 'dayOfMonth',
         3 => 'month',
         4 => 'dayOfWeek',
         5 => 'year'
-    ];
+     ]
+    */
 
     protected $dayMapping = [
         '*' => 'Every day',
