@@ -55,7 +55,7 @@ class TranslateCron
      *
      * Set the expression property.
      */
-    public function setExpression($expression)
+    public function expression($expression)
     {
         $this->expression = $expression;
     }
@@ -65,7 +65,7 @@ class TranslateCron
      *
      * @return array
      */
-    public function getDaysOfWeek()
+    public function daysOfWeek()
     {
         $days = explode(',', explode(' ', $this->expression)[4]);
         if ($this->isRecurring($days[0])) {
@@ -84,7 +84,7 @@ class TranslateCron
      *
      * @return array
      */
-    public function getMonths()
+    public function months()
     {
         $months = explode(',', explode(' ', $this->expression)[3]);
         if ($this->isRecurring($months[0])) {
@@ -103,7 +103,7 @@ class TranslateCron
      *
      * @return array
      */
-    public function getHours()
+    public function hours()
     {
         $hours = explode(',', explode(' ', $this->expression)[1]);
         if ($hours[0] === '*') {
@@ -123,7 +123,7 @@ class TranslateCron
      *
      * @return array
      */
-    public function getMinutes()
+    public function minutes()
     {
         $minutes = explode(',', explode(' ', $this->expression)[0]);
         if ($minutes[0] === '*') {
