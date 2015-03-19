@@ -2,6 +2,7 @@
 
 use Exception;
 
-class InvalidExpression extends Exception {
+class InvalidExpression extends Exception
+{
     protected $message = 'An invalid expression was provided.';
 }

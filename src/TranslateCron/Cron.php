@@ -67,7 +67,7 @@ class Cron
     public function __construct($expression)
     {
         $places = explode(' ', trim($expression));
-        if(count($places) < 5 || count($places) > 6) {
+        if (count($places) < 5 || count($places) > 6) {
             throw new InvalidExpression;
         }
         $this->minutes = $places[0];
@@ -76,7 +76,7 @@ class Cron
         $this->months = $places[3];
         $this->daysOfWeek = $places[4];
         $this->years = '*';
-        if(isset($place[5])) {
+        if (isset($place[5])) {
             $this->years = $places[5];
         }
     }
@@ -86,15 +86,16 @@ class Cron
      *
      * @return array
      */
-    public function years() {
+    public function years()
+    {
         $years = explode(',', $this->years);
-        if($years[0] === '*') {
+        if ($years[0] === '*') {
             return $this->returnFrame('year');
         }
-        if($this->isRecurring($years[0])) {
+        if ($this->isRecurring($years[0])) {
             return $this->returnFrame('years', explode('/', $years[0])[1]);
         }
-        if($this->isRange($years[0])) {
+        if ($this->isRange($years[0])) {
             return $this->returnFrame('years', $years[0]);
         }
         return $years;
@@ -106,15 +107,16 @@ class Cron
      *
      * @return array
      */
-    public function daysOfMonth() {
+    public function daysOfMonth()
+    {
         $days = explode(',', $this->daysOfMonth);
-        if($days[0] === '*') {
+        if ($days[0] === '*') {
             return $this->returnFrame('day of the month');
         }
-        if($this->isRecurring($days[0])){
+        if ($this->isRecurring($days[0])) {
             return $this->returnFrame('days of month', explode('/', $days[0])[1]);
         }
-        if($this->isRange($days[0])) {
+        if ($this->isRange($days[0])) {
             return $this->returnFrame('days of month', $days[0]);
         }
         return $days;
@@ -129,7 +131,7 @@ class Cron
     public function daysOfWeek()
     {
         $days = explode(',', $this->daysOfWeek);
-        if($days[0] === '*') {
+        if ($days[0] === '*') {
             return $this->returnFrame('day of the week');
         }
         if ($this->isRecurring($days[0])) {
